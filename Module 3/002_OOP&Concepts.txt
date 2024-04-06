@@ -1,0 +1,11 @@
+What is OOP? List OOP Concepts.
+
+--> OOP (Object Oriented Programming) is a methodology or paradigm to design a program using classes and objects.
+
+Concepts Of OOP:
+1) Objects
+2) Classes
+3) Data Abstraction and Encapsulation
+4) Polymorphism
+5) Inheritance
+6) Dynamic Binding

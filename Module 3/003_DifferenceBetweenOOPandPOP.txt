@@ -1,0 +1,5 @@
+What is the difference between OOP and POP ?
+
+OOP refers to Object Oriented Programming. It deals with objects and their properties.	While, POP refers to Procedural Oriented Programming and deals with programs and functions. 
+
+An object-oriented program (OOP) uses the bottom-up approach. While, a procedure-oriented program (POP) uses the top-down approach.
