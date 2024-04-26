@@ -1,0 +1,107 @@
+CREATE DATABASE Bank_Assessment;
+
+USE Bank_Assessment;
+
+create table bank (
+    branch_id int primary key auto_increment,
+    branch_name varchar(50),
+    branch_city varchar(50)
+);
+
+insert into bank(branch_name,branch_city)values
+('M G Road','Rajkot'),
+('Mira Road','Ahmedabad'),
+('C G Road','Mumbai'),
+('150 Feet Ring Road','Rajkot'),
+('Thaltej Road','Ahmedabad');
+
+select * from bank;
+
+create table accountholder (
+    account_holder_id int primary key auto_increment,
+    account_no int,
+    account_holder_name varchar(50),
+    city varchar(50),
+    contact varchar(15),
+    date_of_account_created date,
+    account_status varchar(10),
+    account_type varchar(20),
+    balance decimal(10, 2)
+);
+
+insert into accountholder(account_no,account_holder_name,city,contact,date_of_account_created,account_status,account_type,balance)values
+(51345611,'A','Rajkot','5566778899','2010-06-05','Active','Saving',116780),
+(51345622,'B','Ahmedabad','5568778899','2015-08-07','Active','Saving',275500),
+(51345633,'C','Mumbai','5566798899','2019-12-11','Active','Current',375420),
+(51345644,'D','Mumbai','5566228899','2007-10-23','Terminated','Current',0),
+(51345655,'E','Rajkot','5566118899','2023-01-17','Active','Saving',7500000),
+(51345666,'F','Ahmedabad','5566008899','2019-06-15','Terminated','Saving',0),
+(51345677,'G','Rajkot','5533778899','2017-02-16','Terminated','Current',0),
+(51345688,'H','Rajkot','5566778899','2022-05-17','Active','Saving',5617),
+(51345688,'I','Mumbai','5566778899','2001-05-15','Active','Saving',28),
+(51345700,'J','Mumbai','5566778800','2024-04-25','Active','Saving',280570);
+
+select * from accountholder;
+
+create table loan (
+    loan_no int primary key auto_increment,
+    branch_id int,
+    account_holder_id int,
+    loan_amount decimal(10, 2),
+    loan_type varchar(50),
+    foreign key (branch_id) references bank(branch_id),
+    foreign key (account_holder_id) references accountholder(account_holder_id)
+);
+
+insert into loan(branch_id,account_holder_id,loan_amount,loan_type)values
+(1,3,50000,'Home Loan'),
+(2,8,750000,'Car Loan'),
+(3,9,1150000,'Gold Loan'),
+(4,2,1000000,'Car Loan'),
+(5,1,700000,'Home Loan');
+
+select * from loan;
+
+
+
+-- 1)	transaction to transfer funds from account a to account b:
+start transaction;
+update accountholder
+set balance = balance + 100
+where account_holder_name = ‘A’;
+update accountholder
+set balance = balance + 100
+where account_holder_name = ‘B’;
+commit;
+
+
+
+-- 2)	fetch details of account holders from the same city:
+select * from accountholder a1
+where exists (
+    select 1 
+    from accountholder a2 
+    where a1.city = a2.city 
+    and a1.account_holder_id != a2.account_holder_id
+);
+
+
+
+-- 3)	query to fetch account number and account holder name for accounts created after 15th of any month:
+select account_no, account_holder_name
+from accountholder
+where day(date_of_account_created) > 15;
+
+
+
+-- 4)	query to display city name and count the branches in that city:
+select city, count(*) as count_branch
+from bank
+group by city;
+
+
+
+-- 5)	query to display account holder’s id, account holder’s name, branch id, and loan amount for people who have taken loans:
+select ah.account_holder_id, ah.account_holder_name, l.branch_id, l.loan_amount
+from loan l
+join accountholder ah on l.account_holder_id = ah.account_holder_id;
