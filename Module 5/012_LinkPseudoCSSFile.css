@@ -1,0 +1,36 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: lightgreen;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+}
+
+p {
+    color: #666;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+a:link {
+    color: #007bff; 
+    text-decoration: none; 
+    background-color: rgb(204, 255, 0);
+}
+
+a:visited {
+    color: #800080;
+}
+
+a:hover {
+    color: #ff6600; 
+    text-decoration: underline;
+}
+
+a:active {
+    color: #cc0000;
+}
